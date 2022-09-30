@@ -6,7 +6,8 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
   PlayBackType,
   RecordBackType,
-} from 'react-native-audio-recorder-player';
+  OutputFormatAndroidType,
+} from '../index';
 import {
   Dimensions,
   PermissionsAndroid,
@@ -114,10 +115,7 @@ const screenWidth = Dimensions.get('screen').width;
 
 class Page extends Component<any, State> {
   private dirs = RNFetchBlob.fs.dirs;
-  private path = Platform.select({
-    ios: 'hello.m4a',
-    android: `${this.dirs.CacheDir}/hello.mp3`,
-  });
+  private path = `${this.dirs.CacheDir}/hello.mp3`;
 
   private audioRecorderPlayer: AudioRecorderPlayer;
 
@@ -306,6 +304,7 @@ class Page extends Component<any, State> {
     }
 
     const audioSet: AudioSet = {
+      OutputFormatAndroid: OutputFormatAndroidType.MP3,
       AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
       AudioSourceAndroid: AudioSourceAndroidType.MIC,
       AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
