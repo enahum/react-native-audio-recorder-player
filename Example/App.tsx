@@ -21,7 +21,6 @@ import {
 import React, {Component} from 'react';
 
 import Button from './components/uis/Button';
-import RNFetchBlob from 'rn-fetch-blob';
 
 const styles: any = StyleSheet.create({
   container: {
@@ -114,8 +113,7 @@ interface State {
 const screenWidth = Dimensions.get('screen').width;
 
 class Page extends Component<any, State> {
-  private dirs = RNFetchBlob.fs.dirs;
-  private path = `${this.dirs.CacheDir}/hello.mp3`;
+  private path = 'hello.mp3';
 
   private audioRecorderPlayer: AudioRecorderPlayer;
 

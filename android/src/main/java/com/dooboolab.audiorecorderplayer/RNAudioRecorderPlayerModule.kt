@@ -119,7 +119,7 @@ class RNAudioRecorderPlayerModule(private val reactContext: ReactApplicationCont
     }
 
     private fun record(path: String, audioSet: ReadableMap?) {
-        audioFileURL = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultFileName" else path
+        audioFileURL = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultFileName" else "${reactContext.cacheDir}/$path"
         if (mediaRecorder == null) {
             mediaRecorder = MediaRecorder()
         }
@@ -139,13 +139,12 @@ class RNAudioRecorderPlayerModule(private val reactContext: ReactApplicationCont
         }
         mediaRecorder!!.setOutputFile(audioFileURL)
         mediaRecorder!!.prepare()
-        totalPausedRecordTime = 0L
         mediaRecorder!!.start()
     }
 
     @SuppressLint("MissingPermission")
     private fun recordMp3(path: String, audioSet: ReadableMap?) {
-        audioFileURL = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultMp3FileName" else path
+        audioFileURL = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultMp3FileName" else "${reactContext.cacheDir}/$path"
         _recordingMp3 = true
 
         var inSampleRate = 44100
@@ -220,6 +219,7 @@ class RNAudioRecorderPlayerModule(private val reactContext: ReactApplicationCont
             }
 
             _meteringEnabled = meteringEnabled
+            totalPausedRecordTime = 0L
 
             if (isMp3) {
                 recordMp3(path, audioSet)
@@ -357,7 +357,7 @@ class RNAudioRecorderPlayerModule(private val reactContext: ReactApplicationCont
                     }
                     mediaPlayer!!.setDataSource(currentActivity!!.applicationContext, Uri.parse(path), headers)
                 } else {
-                    mediaPlayer!!.setDataSource(path)
+                    mediaPlayer!!.setDataSource("${reactContext.cacheDir}/$path")
                 }
             }
 
@@ -378,7 +378,7 @@ class RNAudioRecorderPlayerModule(private val reactContext: ReactApplicationCont
 
                 mTimer = Timer()
                 mTimer!!.schedule(mTask, 0, subsDurationMillis.toLong())
-                val resolvedPath = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultFileName" else path
+                val resolvedPath = if (((path == "DEFAULT"))) "${reactContext.cacheDir}/$defaultFileName" else "${reactContext.cacheDir}/$path"
                 promise.resolve(resolvedPath)
             }
 
