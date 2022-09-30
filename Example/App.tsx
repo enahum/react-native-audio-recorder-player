@@ -309,7 +309,7 @@ class Page extends Component<any, State> {
       AudioSourceAndroid: AudioSourceAndroidType.MIC,
       AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
       AVNumberOfChannelsKeyIOS: 2,
-      AVFormatIDKeyIOS: AVEncodingOption.aac,
+      AVFormatIDKeyIOS: AVEncodingOption.mp3,
     };
 
     console.log('audioSet', audioSet);
@@ -323,10 +323,11 @@ class Page extends Component<any, State> {
     const uri = await this.audioRecorderPlayer.startRecorder(
       undefined,
       audioSet,
+      true,
     );
 
     this.audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
-      // console.log('record-back', e);
+      console.log('record-back', e);
       this.setState({
         recordSecs: e.currentPosition,
         recordTime: this.audioRecorderPlayer.mmssss(
