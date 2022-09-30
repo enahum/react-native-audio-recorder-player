@@ -34,6 +34,7 @@ export enum OutputFormatAndroidType {
   OUTPUT_FORMAT_RTP_AVP,
   MPEG_2_TS,
   WEBM,
+  MP3 = 300,
 }
 
 export enum AudioEncoderAndroidType {
